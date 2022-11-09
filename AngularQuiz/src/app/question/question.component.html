@@ -14,21 +14,21 @@
                 <h5>{{ points }} points</h5>
             </div>
             <div class="question-remain">
-                <span style="font-style: italic;">Question 1 of 9</span>
+                <span style="font-style: italic;">Question {{ currentQuestion+1 }} of {{ questionList.length }}</span>
             </div>
             <h5 class="timer">
                 {{ counter }} sec ⏱️
             </h5>
         </div>
         <div class="progress mb-3">
-            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-label="Success striped example" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar progress-bar-striped bg-success" role="progressbar" aria-label="Success striped example" [ngStyle]="{'width':progress+'%'}" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
           </div>
           <div class="question">
             <h3>{{ questionList[currentQuestion]?.questionText }}</h3>
           </div>
           <div class="options">
             <ol *ngFor="let option of questionList[currentQuestion]?.options">
-                <li>
+                <li (click)="answer(currentQuestion+1, option)" >
                     <div class="card">
                         {{ option.text }}
                     </div>
@@ -37,9 +37,9 @@
             </ol>
           </div>
           <div class="d-flex justify-content-between">
-            <button class="btn"><i class="fa text-primary fa-chevron-left fa-3x" aria-hidden="true" (click)="previousQuestion()"></i></button>
-            <button class="btn"><i class="fa fa-refresh text-primary fa-3x" aria-hidden="true"></i> </button>
-            <button class="btn"><i class="fa text-primary fa-chevron-right fa-3x" aria-hidden="true" (click)="nextQuestion()"></i></button>
+            <button [disabled]="currentQuestion == 0" class="btn"><i class="fa text-primary fa-chevron-left fa-3x" aria-hidden="true" (click)="previousQuestion()"></i></button>
+            <button class="btn" (click)="resetQuiz()"><i class="fa fa-refresh text-primary fa-3x" aria-hidden="true"></i> </button>
+            <button [disabled]="currentQuestion == 8" class="btn"><i class="fa text-primary fa-chevron-right fa-3x" aria-hidden="true" (click)="nextQuestion()"></i></button>
           </div>
     </div>
 </div>

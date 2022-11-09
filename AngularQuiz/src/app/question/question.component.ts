@@ -9,6 +9,10 @@ import { QuestionService } from '../service/question.service';
 export class QuestionComponent implements OnInit {
 
   public name: string = "";
+  public questionList: any = [];
+  public currentQuestion: number = 0;
+  public points: number = 0;
+  counter = 60;
   constructor(private questionService: QuestionService) { }
 
   ngOnInit(): void {
@@ -19,7 +23,15 @@ export class QuestionComponent implements OnInit {
   getAllQuestions() {
     this.questionService.getQuestionJson()
       .subscribe(res => {
-        console.log(res.questions);
+        this.questionList = res.questions;
       })
+  }
+
+  nextQuestion() {
+    this.currentQuestion++;
+  }
+
+  previousQuestion() {
+    this.currentQuestion--;
   }
 }
